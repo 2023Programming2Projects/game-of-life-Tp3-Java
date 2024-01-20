@@ -7,7 +7,10 @@ import javafx.scene.paint.Color;
  */
 public enum CellState {
     ALIVE(true, Color.RED),
-    DEAD(false, Color.WHITE);
+    DEAD(false, Color.WHITE),
+
+    BLUE(true, Color.BLUE);
+
 
     public final boolean isAlive;
     public final Color color;
