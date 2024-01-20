@@ -93,22 +93,38 @@ public class Grid implements Iterable<Cell> {
     public List<Cell> getNeighbors(int rowIndex, int columnIndex) {
         List<Cell> neighbours = new ArrayList<>();
 
-        for (int row = rowIndex - 1; row <= rowIndex + 1; row++)
+        for (int row = getWrappedRowIndex(rowIndex - 1); row <= getWrappedRowIndex(rowIndex + 1); row++)
             for (int col =  columnIndex - 1; col <= columnIndex + 1; col++)
-                if (row != columnIndex || col != columnIndex)
-                    neighbours.add(cells[row][col]);
+                if (row != rowIndex || col != columnIndex)
+                    neighbours.add(getCell(row, col));
 
         return neighbours;
     }
 
-    // TODO: Écrire une version correcte de cette méthode.
+
     public int countAliveNeighbors(int rowIndex, int columnIndex) {
-        return 0;
+        int aliveNeighboursCount = 0;
+        List<Cell> neighbors = getNeighbors(rowIndex,columnIndex);
+        for (Cell cell : neighbors)
+            if (cell.isAlive())
+                aliveNeighboursCount++;
+
+        return aliveNeighboursCount;
     }
 
-    // TODO: Écrire une version correcte de cette méthode.
+
     public CellState calculateNextState(int rowIndex, int columnIndex) {
-        return null;
+        Cell cell = getCell(rowIndex, columnIndex);
+        int cellAliveNeighborsCount = countAliveNeighbors(rowIndex, columnIndex);
+
+        boolean deadRemainsDead = !cell.isAlive() &&
+                cellAliveNeighborsCount != 3;
+        boolean aliveThenDiesCase = cell.isAlive() &&
+                (cellAliveNeighborsCount < 2 || cellAliveNeighborsCount > 3);
+
+        if (deadRemainsDead || aliveThenDiesCase)
+            return CellState.DEAD;
+        else return CellState.ALIVE;
     }
 
 
