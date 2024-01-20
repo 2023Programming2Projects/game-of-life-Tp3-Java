@@ -93,7 +93,7 @@ public class Grid implements Iterable<Cell> {
     public List<Cell> getNeighbors(int rowIndex, int columnIndex) {
         List<Cell> neighbours = new ArrayList<>();
 
-        for (int row = getWrappedRowIndex(rowIndex - 1); row <= getWrappedRowIndex(rowIndex + 1); row++)
+        for (int row = rowIndex - 1; row <= rowIndex + 1; row++)
             for (int col =  columnIndex - 1; col <= columnIndex + 1; col++)
                 if (row != rowIndex || col != columnIndex)
                     neighbours.add(getCell(row, col));
@@ -121,17 +121,17 @@ public class Grid implements Iterable<Cell> {
                 cellAliveNeighborsCount != 3;
         boolean aliveThenDiesCase = cell.isAlive() &&
                 (cellAliveNeighborsCount < 2 || cellAliveNeighborsCount > 3);
-
         if (deadRemainsDead || aliveThenDiesCase)
             return CellState.DEAD;
         else return CellState.ALIVE;
     }
 
 
-
-    // TODO: Écrire une version correcte de cette méthode.
     public CellState[][] calculateNextStates() {
         CellState[][] nextCellState = new CellState[getNumberOfRows()][getNumberOfColumns()];
+        for (int row = 0; row < getNumberOfRows() + 1; row++)
+            for (int col = 0; col < getNumberOfColumns(); col++)
+                nextCellState[row][col] = calculateNextState(row, col);
         return nextCellState;
     }
 
