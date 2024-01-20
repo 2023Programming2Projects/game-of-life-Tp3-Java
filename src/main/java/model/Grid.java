@@ -151,7 +151,7 @@ public class Grid implements Iterable<Cell> {
             if (countBlueNeighbor(rowIndex, columnIndex) > countRedNeighbor(rowIndex, columnIndex))
                 return CellState.BLUE;
             else return CellState.ALIVE;
-        else return CellState.ALIVE;
+        else return cell.getState();
     }
 
 
@@ -207,8 +207,12 @@ public class Grid implements Iterable<Cell> {
     public void randomGeneration(Random random) {
         for (int row = 0; row < getNumberOfRows() + 1; row++)
             for (int col = 0; col < getNumberOfColumns(); col++)
-                if (random.nextBoolean())
-                    getCell(row, col).setState(CellState.ALIVE);
+                if (random.nextBoolean()) {
+                    Random random1 = new Random();
+                    if (random1.nextBoolean())
+                        getCell(row, col).setState(CellState.ALIVE);
+                    else getCell(row, col).setState(CellState.BLUE);
+                }
                 else getCell(row, col).setState(CellState.DEAD);
     }
 }
