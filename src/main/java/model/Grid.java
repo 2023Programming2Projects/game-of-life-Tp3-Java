@@ -142,8 +142,15 @@ public class Grid implements Iterable<Cell> {
                 cellAliveNeighborsCount != 3;
         boolean aliveThenDiesCase = cell.isAlive() &&
                 (cellAliveNeighborsCount < 2 || cellAliveNeighborsCount > 3);
+
+        boolean deadBecomeAlive = !cell.isAlive() && cellAliveNeighborsCount == 3;
+
         if (deadRemainsDead || aliveThenDiesCase)
             return CellState.DEAD;
+        else if (deadBecomeAlive)
+            if (countBlueNeighbor(rowIndex, columnIndex) > countRedNeighbor(rowIndex, columnIndex))
+                return CellState.BLUE;
+            else return CellState.ALIVE;
         else return CellState.ALIVE;
     }
 
