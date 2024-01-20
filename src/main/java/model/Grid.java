@@ -94,9 +94,9 @@ public class Grid implements Iterable<Cell> {
         List<Cell> neighbours = new ArrayList<>();
 
         for (int row = rowIndex - 1; row <= rowIndex + 1; row++)
-            for (int col =  columnIndex - 1; col <= columnIndex + 1; col++)
-                if (row != rowIndex || col != columnIndex)
-                    neighbours.add(getCell(row, col));
+            for (int column =  columnIndex - 1; column <= columnIndex + 1; column++)
+                if (row != rowIndex || column != columnIndex)
+                    neighbours.add(getCell(row, column));
 
         return neighbours;
     }
@@ -130,16 +130,16 @@ public class Grid implements Iterable<Cell> {
     public CellState[][] calculateNextStates() {
         CellState[][] nextCellState = new CellState[getNumberOfRows()][getNumberOfColumns()];
         for (int row = 0; row < getNumberOfRows() + 1; row++)
-            for (int col = 0; col < getNumberOfColumns(); col++)
-                nextCellState[row][col] = calculateNextState(row, col);
+            for (int column = 0; column < getNumberOfColumns(); column++)
+                nextCellState[row][column] = calculateNextState(row, column);
         return nextCellState;
     }
 
 
     public void updateStates(CellState[][] nextState) {
         for (int row = 0; row < getNumberOfRows() + 1; row++)
-            for (int col = 0; col < getNumberOfColumns(); col++)
-                getCell(row, col).setState(nextState[row][col]);
+            for (int column = 0; column < getNumberOfColumns(); column++)
+                getCell(row, column).setState(nextState[row][column]);
     }
 
     /**
@@ -157,7 +157,9 @@ public class Grid implements Iterable<Cell> {
      */
     // TODO: Écrire une version correcte de cette méthode.
     public void updateToNextGeneration() {
-
+        for (int row = 0; row < getNumberOfRows() + 1; row++)
+            for (int column = 0; column < getNumberOfColumns(); column++)
+                getCell(row, column).setState(calculateNextState(row, column));
     }
 
     /**
