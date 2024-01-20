@@ -112,6 +112,27 @@ public class Grid implements Iterable<Cell> {
         return aliveNeighboursCount;
     }
 
+    public int countRedNeighbor(int rowIndex, int columnIndex){
+        int redNeighboursCount = 0;
+        List<Cell> neighbors = getNeighbors(rowIndex,columnIndex);
+        for (Cell cell : neighbors)
+            if (cell.getState() == CellState.ALIVE)
+                redNeighboursCount++;
+
+        return redNeighboursCount;
+    }
+
+
+    public int countBlueNeighbor(int rowIndex, int columnIndex){
+        int blueNeighboursCount = 0;
+        List<Cell> neighbors = getNeighbors(rowIndex,columnIndex);
+        for (Cell cell : neighbors)
+            if (cell.getState() == CellState.BLUE)
+                blueNeighboursCount++;
+
+        return blueNeighboursCount;
+    }
+
 
     public CellState calculateNextState(int rowIndex, int columnIndex) {
         Cell cell = getCell(rowIndex, columnIndex);
@@ -155,7 +176,6 @@ public class Grid implements Iterable<Cell> {
      * reproduction.</li>
      * </ul>
      */
-    // TODO: Écrire une version correcte de cette méthode.
     public void updateToNextGeneration() {
         for (int row = 0; row < getNumberOfRows() + 1; row++)
             for (int column = 0; column < getNumberOfColumns(); column++)
