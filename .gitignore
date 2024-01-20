@@ -1,4 +1,5 @@
-# Ignoring .gradle/ and .idea/ directories
+# Ignoring .gradle/, build/ and .idea/ directories
 .idea/
+build/
 .gradle/
 
