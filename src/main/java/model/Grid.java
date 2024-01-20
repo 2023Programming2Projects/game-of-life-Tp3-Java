@@ -177,8 +177,11 @@ public class Grid implements Iterable<Cell> {
      * @param random {@link Random} instance used to decide if each {@link Cell} is ALIVE or DEAD.
      * @throws NullPointerException if {@code random} is {@code null}.
      */
-    // TODO: Écrire une version correcte de cette méthode.
     public void randomGeneration(Random random) {
-
+        for (int row = 0; row < getNumberOfRows() + 1; row++)
+            for (int col = 0; col < getNumberOfColumns(); col++)
+                if (random.nextBoolean())
+                    getCell(row, col).setState(CellState.ALIVE);
+                else getCell(row, col).setState(CellState.DEAD);
     }
 }
